@@ -1,5 +1,13 @@
 @extends('layouts.viewLayoutBlog')
 @section('conten')
+    <div class="col-12">
+        @if (Session::has('blog'))
+            <p class="text-success">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                {{ Session::get('blog') }}
+            </p>
+        @endif
+    </div>
     @foreach($blogs as $blog)
         <div class="blog-post">
             <h1 class="blog-title">{{ $blog->title }}</h1>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\BlogModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BlogController extends Controller
 {
@@ -39,10 +40,13 @@ class BlogController extends Controller
         $blogs->Created = $date;
         $blogs->noidung = $request->input('noidung');
         $blogs->save();
+
+        $request->session()->flash('blog', 'Tạo mới blog thành công ');
         return redirect(route('blog'));
     }
 
-    public function viewUpdateBlog($id) {
+    public function viewUpdateBlog($id)
+    {
         $blogs = BlogModel::find($id);
         return view('update', compact('blogs'));
     }
@@ -55,11 +59,15 @@ class BlogController extends Controller
                 'content' => $request->input('content'),
                 'noidung' => $request->input('noidung')
             ]);
+        $request->session()->flash('blog', 'Cập nhật blog thành công ');
         return redirect(route('blog'));
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $delete = BlogModel::find($id)->delete();
+        Session::flash('blog', 'Xóa blog thành công ');
+
         return redirect(route('blog'));
     }
 }
